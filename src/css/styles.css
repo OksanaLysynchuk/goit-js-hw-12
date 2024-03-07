@@ -23,3 +23,28 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+.search-page {
+  display: flex;
+  justify-content: center;
+}
+
+.search-btn {
+  background-color: blue;
+  color: white;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+  margin-top: 36px;
+}
+img.gallery-image {
+  max-width: 360px;
+  max-height: 200px;
+}
+img.gallery-image:hover {
+  max-width: 376px;
+  max-height: 208px;
+}
