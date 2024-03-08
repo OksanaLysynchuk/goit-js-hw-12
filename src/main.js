@@ -16,6 +16,7 @@ import {
   hideLoadMoreButton,
   showLoadMoreButton,
   showEndMessage,
+  hideEndMessage,
 } from './js/render-functions.js';
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const gallery = document.querySelector('.gallery');
   const loadMoreButton = document.querySelector('.load-more');
   const spinner = document.querySelector('.spinner');
+  const endMessage = document.querySelector('.end-message');
 
   searchForm.addEventListener('submit', handleSearch);
 
@@ -64,13 +66,15 @@ document.addEventListener('DOMContentLoaded', function () {
         );
       } else {
         renderGallery(images);
+        showLoadMoreButton();
       }
-      showLoadMoreButton();
     } catch (error) {
       hideLoadingIndicator();
       showErrorToast('Error while fetching images from pixabay!');
     }
   }
+
+  loadMoreButton.addEventListener('click', handleLoadMore);
 
   function handleLoadMore() {
     loadMoreButton.disabled = true;
@@ -82,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
           hideLoadMoreButton();
           showEndMessage();
         } else {
-          renderImages(images);
+          renderGallery(images);
         }
       })
       .finally(() => {
@@ -93,5 +97,13 @@ document.addEventListener('DOMContentLoaded', function () {
           behavior: 'smooth',
         });
       });
+  }
+
+  function showEndMessage() {
+    endMessage.classList.remove('hidden');
+  }
+
+  function hideEndMessage() {
+    endMessage.classList.add('hidden');
   }
 });

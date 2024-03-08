@@ -48,3 +48,6 @@ img.gallery-image:hover {
   max-width: 376px;
   max-height: 208px;
 }
+.load-more {
+  display: none;
+}

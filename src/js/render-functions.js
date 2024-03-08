@@ -54,6 +54,11 @@ export function showEndMessage() {
   endMessage.classList.remove('hidden');
 }
 
+export function hideEndMessage() {
+  const endMessage = document.querySelector('.end-message');
+  endMessage.classList.add('hidden');
+}
+
 export function showErrorToast(message) {
   iziToast.error({
     title: 'Error',
