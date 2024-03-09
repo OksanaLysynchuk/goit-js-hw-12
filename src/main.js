@@ -1,13 +1,6 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-export function showErrorToast(message) {
-  iziToast.error({
-    title: 'Error',
-    message: message,
-    position: 'topRight',
-  });
-}
 import { fetchImages } from './js/pixabay-api.js';
 import {
   renderGallery,
@@ -15,6 +8,7 @@ import {
   hideLoadingIndicator,
   hideLoadMoreButton,
   showLoadMoreButton,
+  showErrorToast,
   showEndMessage,
   hideEndMessage,
 } from './js/render-functions.js';
@@ -24,6 +18,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const searchInput = document.querySelector('.search-placeholder');
   const gallery = document.querySelector('.gallery');
   const loadMoreButton = document.querySelector('.load-more');
+  const spinner = document.querySelector('.spinner');
+  const endMessage = document.querySelector('.end-message');
 
   searchForm.addEventListener('submit', handleSearch);
 
@@ -95,14 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
           top: window.innerHeight * 2,
           behavior: 'smooth',
         });
+        hideEndMessage();
       });
-  }
-
-  function showEndMessage() {
-    endMessage.classList.remove('hidden');
-  }
-
-  function hideEndMessage() {
-    endMessage.classList.add('hidden');
   }
 });
