@@ -19,7 +19,8 @@ export async function fetchImages(query, page = 1, perPage = 15) {
 
     return response.data.hits;
   } catch (error) {
-    console.error('Error while fetching images from pixabay!', error);
+    showErrorToast('Error while fetching images from pixabay!');
+    console.log('Error while fetching images from pixabay!', error);
     return error;
   }
 }

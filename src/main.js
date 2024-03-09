@@ -24,8 +24,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const searchInput = document.querySelector('.search-placeholder');
   const gallery = document.querySelector('.gallery');
   const loadMoreButton = document.querySelector('.load-more');
-  const spinner = document.querySelector('.spinner');
-  const endMessage = document.querySelector('.end-message');
 
   searchForm.addEventListener('submit', handleSearch);
 
@@ -37,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const data = await fetchImages(query, page);
       return data.hits;
     } catch (error) {
-      console.log(error.message);
+      showErrorToast('Error while fetching images from pixabay!');
       return [];
     }
   }
@@ -87,10 +85,11 @@ document.addEventListener('DOMContentLoaded', function () {
           showEndMessage();
         } else {
           renderGallery(images);
+          showLoadMoreButton();
         }
       })
       .finally(() => {
-        spinner.classList.add('hidden');
+        hideLoadingIndicator();
         loadMoreButton.disabled = false;
         window.scrollBy({
           top: window.innerHeight * 2,
