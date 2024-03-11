@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
       return data.hits;
     } catch (error) {
       showErrorToast('Error while fetching images from pixabay!');
-      return [];
+      throw error; // Re-throw the error to handle it properly
     }
   }
 
@@ -70,28 +70,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
   loadMoreButton.addEventListener('click', handleLoadMore);
 
-  function handleLoadMore() {
+  async function handleLoadMore() {
     loadMoreButton.disabled = true;
     spinner.classList.remove('hidden');
     currentPage++;
-    loadImages(currentQuery, currentPage)
-      .then(images => {
-        if (images.length === 0) {
-          hideLoadMoreButton();
-          showEndMessage();
-        } else {
-          renderGallery(images);
-          showLoadMoreButton();
-        }
-      })
-      .finally(() => {
-        hideLoadingIndicator();
-        loadMoreButton.disabled = false;
-        window.scrollBy({
-          top: window.innerHeight * 2,
-          behavior: 'smooth',
-        });
-        hideEndMessage();
+    try {
+      const images = await loadImages(currentQuery, currentPage);
+      if (images.length === 0) {
+        hideLoadMoreButton();
+        showEndMessage();
+      } else {
+        renderGallery(images);
+        showLoadMoreButton();
+      }
+    } catch (error) {
+      showErrorToast('Error while fetching images from pixabay!');
+    } finally {
+      hideLoadingIndicator();
+      loadMoreButton.disabled = false;
+      window.scrollBy({
+        top: window.innerHeight * 2,
+        behavior: 'smooth',
       });
+      hideEndMessage();
+    }
   }
 });
