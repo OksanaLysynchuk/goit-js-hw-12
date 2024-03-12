@@ -51,3 +51,7 @@ img.gallery-image:hover {
 .load-more {
   display: none;
 }
+
+.end-message.hidden {
+  display: none;
+}

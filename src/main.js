@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const loadMoreButton = document.querySelector('.load-more');
   const spinner = document.querySelector('.spinner');
   const endMessage = document.querySelector('.end-message');
+  endMessage.classList.add('hidden');
 
   searchForm.addEventListener('submit', handleSearch);
 
@@ -28,11 +29,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   async function loadImages(query, page) {
     try {
-      const data = await fetchImages(query, page);
-      return data.hits;
+      const response = await fetchImages(query, page);
+      return response;
     } catch (error) {
-      showErrorToast('Error while fetching images from pixabay!');
-      throw error; // Re-throw the error to handle it properly
+      throw error;
     }
   }
 
@@ -64,7 +64,8 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     } catch (error) {
       hideLoadingIndicator();
-      showErrorToast('Error while fetching images from pixabay!');
+
+      console.log(error);
     }
   }
 
@@ -82,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
       } else {
         renderGallery(images);
         showLoadMoreButton();
+        hideEndMessage();
       }
     } catch (error) {
       showErrorToast('Error while fetching images from pixabay!');
