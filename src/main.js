@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   let currentPage = 1;
   let currentQuery = '';
+  let images = [];
 
   async function loadImages(query, page) {
     try {
@@ -66,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } catch (error) {
       hideLoadingIndicator();
 
-      console.log(error);
+      showErrorToast('Error while fetching images from pixabay!');
     }
   }
 
@@ -77,27 +78,27 @@ document.addEventListener('DOMContentLoaded', function () {
     spinner.classList.remove('hidden');
     currentPage++;
     try {
-      const images = await loadImages(currentQuery, currentPage);
-      if (images.length === 0) {
+      const newImages = await loadImages(currentQuery, currentPage);
+      if (newImages.length === 0) {
         hideLoadMoreButton();
         showEndMessage();
       } else {
+        images = images.concat(newImages);
         renderGallery(images);
         showLoadMoreButton();
-        hideEndMessage();
       }
     } catch (error) {
       showErrorToast('Error while fetching images from pixabay!');
     } finally {
       hideLoadingIndicator();
       loadMoreButton.disabled = false;
+      spinner.classList.add('hidden');
       window.scrollBy({
         top: window.innerHeight * 2,
         behavior: 'smooth',
       });
-      hideLoadMoreButton();
-      showEndMessage();
     }
   }
+
   loadMoreButton.addEventListener('click', handleLoadMore);
 });
