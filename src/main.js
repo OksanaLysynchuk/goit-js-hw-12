@@ -16,13 +16,10 @@ import {
 document.addEventListener('DOMContentLoaded', function () {
   const searchForm = document.querySelector('.search-page');
   const searchInput = document.querySelector('.search-placeholder');
-  const gallery = document.querySelector('.gallery');
   const loadMoreButton = document.querySelector('.load-more');
   const spinner = document.querySelector('.spinner');
   const endMessage = document.querySelector('.end-message');
   endMessage.classList.add('hidden');
-
-  searchForm.addEventListener('submit', handleSearch);
 
   let currentPage = 1;
   let currentQuery = '';
@@ -38,9 +35,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   async function handleSearch(event) {
     event.preventDefault();
+    const gallery = document.querySelector('.gallery');
     gallery.innerHTML = '';
 
     const query = searchInput.value.trim();
+
+    hideLoadMoreButton();
+    hideEndMessage();
 
     if (!query) {
       showErrorToast('Please enter a search term');
@@ -69,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  loadMoreButton.addEventListener('click', handleLoadMore);
+  searchForm.addEventListener('submit', handleSearch);
 
   async function handleLoadMore() {
     loadMoreButton.disabled = true;
@@ -94,7 +95,9 @@ document.addEventListener('DOMContentLoaded', function () {
         top: window.innerHeight * 2,
         behavior: 'smooth',
       });
-      hideEndMessage();
+      hideLoadMoreButton();
+      showEndMessage();
     }
   }
+  loadMoreButton.addEventListener('click', handleLoadMore);
 });

@@ -49,9 +49,11 @@ img.gallery-image:hover {
   max-height: 208px;
 }
 .load-more {
-  display: none;
+  visibility: hidden;
+  background-color: blue;
+  color: white;
 }
 
 .end-message.hidden {
-  display: none;
+  visibility: hidden;
 }

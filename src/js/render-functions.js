@@ -5,7 +5,7 @@ import 'izitoast/dist/css/iziToast.min.css';
 
 export function renderGallery(images) {
   const galleryContainer = document.querySelector('.gallery');
-  galleryContainer.innerHTML = '';
+  const fragment = document.createDocumentFragment();
 
   images.forEach(image => {
     const card = document.createElement('div');
@@ -18,11 +18,14 @@ export function renderGallery(images) {
     const img = document.createElement('img');
     img.src = image.webformatURL;
     img.alt = image.tags;
+    img.classList.add('gallery-image');
 
     imgLink.appendChild(img);
     card.appendChild(imgLink);
-    galleryContainer.appendChild(card);
+    fragment.appendChild(card);
   });
+  galleryContainer.innerHTML = ''; // Очищаємо контейнер перед додаванням нових елементів
+  galleryContainer.appendChild(fragment);
 
   const lightbox = new SimpleLightbox('.gallery a', {
     captionsData: 'alt',
@@ -44,21 +47,25 @@ export function hideLoadingIndicator() {
 export function hideLoadMoreButton() {
   const loadMoreButton = document.querySelector('.load-more');
   loadMoreButton.classList.add('hidden');
+  loadMoreButton.style.visibility = 'hidden';
 }
 
 export function showLoadMoreButton() {
   const loadMoreButton = document.querySelector('.load-more');
   loadMoreButton.classList.remove('hidden');
+  loadMoreButton.style.visibility = 'visible';
 }
 
 export function showEndMessage() {
   const endMessage = document.querySelector('.end-message');
   endMessage.classList.remove('hidden');
+  endMessage.style.visibility = 'visible';
 }
 
 export function hideEndMessage() {
   const endMessage = document.querySelector('.end-message');
   endMessage.classList.add('hidden');
+  endMessage.style.visibility = 'hidden';
 }
 
 export function showErrorToast(message) {
