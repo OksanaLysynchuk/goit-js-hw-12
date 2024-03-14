@@ -24,7 +24,7 @@ export function renderGallery(images) {
     card.appendChild(imgLink);
     fragment.appendChild(card);
   });
-  galleryContainer.innerHTML = ''; // Очищаємо контейнер перед додаванням нових елементів
+  galleryContainer.innerHTML = '';
   galleryContainer.appendChild(fragment);
 
   const lightbox = new SimpleLightbox('.gallery a', {

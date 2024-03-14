@@ -36,9 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   async function handleSearch(event) {
     event.preventDefault();
-    const gallery = document.querySelector('.gallery');
-    gallery.innerHTML = '';
-
     const query = searchInput.value.trim();
 
     hideLoadMoreButton();
@@ -54,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
     showLoadingIndicator();
 
     try {
-      const images = await loadImages(query, currentPage);
+      images = await loadImages(query, currentPage);
       hideLoadingIndicator();
       if (images.length === 0) {
         showErrorToast(
@@ -66,7 +63,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     } catch (error) {
       hideLoadingIndicator();
-
       showErrorToast('Error while fetching images from pixabay!');
     }
   }
