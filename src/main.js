@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function () {
   const loadMoreButton = document.querySelector('.load-more');
   const spinner = document.querySelector('.spinner');
   const endMessage = document.querySelector('.end-message');
-  endMessage.classList.add('hidden');
 
   let currentPage = 1;
   let currentQuery = '';
@@ -34,12 +33,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  function resetGallery() {
+    const galleryContainer = document.querySelector('.gallery');
+    galleryContainer.innerHTML = '';
+  }
+
   async function handleSearch(event) {
     event.preventDefault();
     const query = searchInput.value.trim();
-
-    hideLoadMoreButton();
-    hideEndMessage();
 
     if (!query) {
       showErrorToast('Please enter a search term');
@@ -48,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     currentQuery = query;
     currentPage = 1;
+    resetGallery();
     showLoadingIndicator();
 
     try {
@@ -81,7 +83,11 @@ document.addEventListener('DOMContentLoaded', function () {
       } else {
         images = images.concat(newImages);
         renderGallery(images);
-        showLoadMoreButton();
+        if (newImages.length < 15) {
+          hideLoadMoreButton();
+        } else {
+          showLoadMoreButton();
+        }
       }
     } catch (error) {
       showErrorToast('Error while fetching images from pixabay!');
