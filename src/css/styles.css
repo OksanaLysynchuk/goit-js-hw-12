@@ -23,6 +23,7 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
 .search-page {
   display: flex;
   justify-content: center;
